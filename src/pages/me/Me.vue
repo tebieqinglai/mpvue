@@ -35,6 +35,7 @@ export default {
 					iv: iv 
 				}
 				qcloud.setLoginUrl(config.loginUrl)
+				console.log(config.userUrl)
 				qcloud.requestLogin({
 					loginParams,
 					success(){
