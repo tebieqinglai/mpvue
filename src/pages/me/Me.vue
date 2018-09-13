@@ -6,24 +6,38 @@
    		 <p>{{userinfo.nickName}}</p> 
    		</div>
 	</div>
-	<button v-if='userinfo.openId' class='btn'>添加图书</button>
-   <button v-else open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>
+	<year-progress></year-progress>
+	<!-- <button class='btn' @click="scanbook">添加图书</button> -->
+	<button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">老师的新点击登录</button>
+	<button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="loginTwo">同学的点击登录</button>
   </div>
 </template>
 
 <script>
 import config from "@/config"
 import qcloud from "wafer2-client-sdk"
+import YearProgress from "@/components/YearProgress"
+import { showSuccess } from "@/util"
 export default {
+  components:{
+	YearProgress
+  },
   data(){
 	return{
 		userinfo: { 
-			avatarUrl: 'http://image.shengxinjing.cn/rate/unlogin.png', 
+			avatarUrl: '../../../static/img/unlogin.png', 
 			nickName: '' 
 		}
 	}
   },
   methods:{
+  	scanbook(){
+  		wx.scanCode({
+		  success: (res) => {
+		    console.log(res)
+		  }
+		})
+  	},
   	getWxLogin: function ({encryptedData, iv, userinfo}) {
 		const self = this
 		wx.login({
@@ -64,7 +78,7 @@ export default {
   		console.log(0,e)
   		wx.getSetting({
   			success:function(res){
-  				console.log(1)
+  				console.log(1,res)
   				if (res.authSetting['scope.userInfo']) {
   					wx.checkSession({
   						success: function (res) {
@@ -90,7 +104,23 @@ export default {
   				console.log(4)
   			}
   		})
-  	}
+  	},
+  	loginTwo () {
+      let user = wx.getStorageSync('userinfo')
+      if (!user) {
+        qcloud.login({
+          success: (userinfo) => {
+            console.log('登陆成功', userinfo)
+            wx.setStorageSync('userinfo', userinfo)
+            this.userinfo = userinfo
+            showSuccess('登陆成功')
+          },
+          fail: (err) => {
+            console.log('登陆失败', err)
+          }
+        })
+      }
+    }
   }
 }
 </script>
