@@ -7,7 +7,7 @@
 	</div>
    </div>
 	<year-progress></year-progress>
-	<button class='btn' @click="scanbook">添加图书</button>
+	<!-- <button class='btn' @click="scanbook">添加图书</button> -->
 	<!-- <button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">老师的新点击登录</button>
 	<button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="loginTwo">同学的点击登录</button> -->
 	<button v-if='userinfo.openId' @click='scanBook' class='btn'>添加图书</button>
@@ -53,37 +53,35 @@ export default {
 		  }
 		})
   	},
-  	
-  	 login () {
-      wx.showToast({
-        title: '登录中',
-        icon: 'loading'
-      })
-      qcloud.setLoginUrl(config.loginUrl)
-      const session = qcloud.Session.get()
-      if (session) {
-        qcloud.loginWithCode({
-          success: res => {
-            console.log('没过期的登录', res)
-            this.loginSuccess(res)
-          },
-          fail: err => {
-            console.error(err)
-          }
-        })
-      } else {
-        qcloud.login({
-          success: res => {
-            console.log('登录成功', res)
-            this.loginSuccess(res)
-          },
-          fail: err => {
-            console.error(1,err)
-          }
-        })
-      }
-    }
-
+	login () {
+		wx.showToast({
+			title: '登录中',
+			icon: 'loading'
+		})
+		qcloud.setLoginUrl(config.loginUrl)
+		const session = qcloud.Session.get()
+		if (session) {
+			qcloud.loginWithCode({
+			  success: res => {
+			    console.log('没过期的登录', res)
+			    this.loginSuccess(res)
+			  },
+			  fail: err => {
+			    console.error(err)
+			  }
+			})
+		}else {
+			qcloud.login({
+			  success: res => {
+			    console.log('登录成功', res)
+			    this.loginSuccess(res)
+			  },
+			  fail: err => {
+			    console.error(1,err)
+			  }
+			})
+		}
+	}
 
   }
 }
