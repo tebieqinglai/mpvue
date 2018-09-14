@@ -10,8 +10,8 @@
 	<button class='btn' @click="scanbook">添加图书</button>
 	<!-- <button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">老师的新点击登录</button>
 	<button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="loginTwo">同学的点击登录</button> -->
-	<!-- <button v-if='userinfo.openId' @click='scanbook' class='btn'>添加图书</button> -->
-    <button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>
+	<button v-if='userinfo.openId' @click='scanBook' class='btn'>添加图书</button>
+    <button v-else open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
   			console.log('error')
   		}
   	},
-  	scanbook(){
+  	scanBook(){
   		wx.scanCode({
 		  success: (res) => {
 		    if(res.result){
@@ -78,7 +78,7 @@ export default {
             this.loginSuccess(res)
           },
           fail: err => {
-            console.error(err)
+            console.error(1,err)
           }
         })
       }
