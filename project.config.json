@@ -4,14 +4,14 @@
 		"urlCheck": false,
 		"es6": false,
 		"postcss": true,
-		"minified": true,
+		"minified": false,
 		"newFeature": true
 	},
 	"miniprogramRoot": "./dist/",
-	"qcloudRoot": "./server",
+	"qcloudRoot": "./server/",
 	"compileType": "miniprogram",
-	"appid": "wxafcf7dcc9a9824cc",
-	"projectname": "first-mpvue",
+	"appid": "wx3115dc2132676fe0",
+	"projectname": "mpvue-new",
 	"condition": {
 		"search": {
 			"current": -1,
