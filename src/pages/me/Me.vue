@@ -7,9 +7,6 @@
 	</div>
    </div>
 	<year-progress></year-progress>
-	<!-- <button class='btn' @click="scanbook">添加图书</button> -->
-	<!-- <button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">老师的新点击登录</button>
-	<button open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="loginTwo">同学的点击登录</button> -->
 	<button v-if='userinfo.openId' @click='scanBook' class='btn'>添加图书</button>
     <button v-else open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>
   </div>
@@ -19,7 +16,7 @@
 import config from "@/config"
 import qcloud from "wafer2-client-sdk"
 import YearProgress from "@/components/YearProgress"
-import { showSuccess,get,post } from "@/util"
+import { showSuccess,get,post,showModal } from "@/util"
 export default {
   components:{
 	YearProgress
@@ -28,31 +25,38 @@ export default {
 	return{
 		userinfo: { 
 			avatarUrl: '../../../static/img/unlogin.png', 
-			nickName: '' 
+			nickName: ''
 		}
 	}
   },
   methods:{
   	async addBook(isbn){
   		const res = await post('/webapp/addbook',{
-  			isbn
+  			isbn,
+  			openId:this.userinfo.openId
   		})
-  		if(res.code == 0 && res.data.title){
-  			showSuccess('添加成功')
-  		}else{
-  			console.log('error')
-  		}
+  		showModal('添加成功',`${res.title}添加成功`)
+  		// if(res.code == 0 && res.data.title){
+  		// 	showSuccess('添加成功')
+  		// }else{
+  		// 	console.log('error')
+  		// }
   	},
   	scanBook(){
   		wx.scanCode({
 		  success: (res) => {
 		    if(res.result){
-		    	console.log(res)
+		    	console.log(res.result)
 		    	this.addBook(res.result)
 		    }
 		  }
 		})
   	},
+  	loginSuccess (res) {
+      showSuccess('登录成功')
+      wx.setStorageSync('userinfo', res)
+      this.userinfo = res
+    },
 	login () {
 		wx.showToast({
 			title: '登录中',
@@ -73,20 +77,38 @@ export default {
 		}else {
 			qcloud.login({
 			  success: res => {
-			    console.log('登录成功', res)
 			    this.loginSuccess(res)
 			  },
 			  fail: err => {
-			    console.error(1,err)
+			    console.error(err)
 			  }
 			})
 		}
 	}
 
+  },
+  onShow(){
+  	wx.showShareMenu()
+  	let userinfo = wx.getStorageSync('userinfo')
+  	if(userinfo){
+  		this.userinfo = userinfo
+  	}
   }
 }
 </script>
 
 <style>
-
+	.container{
+		padding:0 30rpx;
+	}  
+	.userinfo{
+  		margin-top:100rpx;
+  		text-align:center;
+  	}
+  	.userinfo img{
+	    width: 150rpx;
+	    height:150rpx;
+	    margin: 20rpx;
+	    border-radius: 50%;
+  	}
 </style>

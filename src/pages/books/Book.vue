@@ -1,24 +1,30 @@
 <template>
-  <div>book</div>
+  <div>
+    <card v-for="book in books" :key="book.id" :book='book'></card>
+  </div>
 </template>
 
 <script>
-// import config from "../../config"
-// import qcloud from "wafer2-client-sdk"
+import {get} from "@/util"
+import Card from "@/components/Cardtwo"
 export default {
-  // methods: {
-  //     doLogin: function (e) {
-  //       qcloud.setLoginUrl(config.loginUrl)
-  //       qcloud.login({
-  //         success: function (userInfo) {
-  //           console.log('登录成功', userInfo)
-  //         },
-  //         fail: function (err) {
-  //           console.log('登录失败1', err)
-  //         }
-  //       })
-  //     }
-  //   }
+  components:{
+    Card
+  },
+  data(){
+    return{
+      books:[]
+    }
+  },
+  methods:{
+    async getList(){
+      const books = await get('/webapp/booklist')
+      this.books = books.list
+    }
+  },
+  mounted(){
+    this.getList()
+  }
 }
 </script>
 

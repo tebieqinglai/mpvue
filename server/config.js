@@ -5,8 +5,8 @@ const CONF = {
     tunnelSignatureKey: '27fb7d1c161b7ca52d73cce0f1d833f9f5b5ec89',
       // 腾讯云相关配置可以查看云 API 密钥控制台：https://console.cloud.tencent.com/capi
     qcloudAppId: '1257475911',
-    qcloudSecretId: 'AKID5JQL5fcnuvmWkDeZ0MZZguHZig5KQyNf',
-    qcloudSecretKey: 'EQSL2XvDPWWWN3Zt1yjqpdIxVxEJEyXw',
+    qcloudSecretId: 'AKIDvyraAbaBKI5iOuNUbXJuPjyDTeidABlF',
+    qcloudSecretKey: 'dCf3JQN9uERVQCwlV7g8RdicMvNgv4BA',
     wxMessageToken: 'weixinmsgtoken',
     networkTimeout: 30000,
 
@@ -28,7 +28,7 @@ const CONF = {
      * 开发环境下，MySQL 的初始密码为您的微信小程序 appid
      */
     mysql: {
-        host: 'locahost',
+        host: '127.0.0.1',
         port: 3306,
         user: 'root',
         db: 'cAuth',
