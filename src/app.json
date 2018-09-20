@@ -2,13 +2,16 @@
   "pages": [
     "pages/me/main",
     "pages/books/main",
-    "pages/comments/main"
+    "pages/comments/main",
+    "pages/detail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "re'd",
     "navigationBarTitleText": "WeChat123",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":true,
+    "onReachBottomDistance":50
   },
   "tabBar":{
     "selectedColor":"#EA5149",
